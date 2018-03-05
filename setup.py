@@ -6,7 +6,7 @@ with open('README.rst', 'r') as f:
 
 setup(
     name='parosm',
-    version='0.1',
+    version='0.1b1',
     description='OpenStreetMap Parser',
     long_description=long_description,
     url='https://github.com/DaGuich/parosm.git',
