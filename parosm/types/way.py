@@ -9,7 +9,8 @@ class Way(OSMBaseType):
     def add_node(self, identifier):
         self._nodes.append(identifier)
 
-    def __get_nodes(self):
+    @property
+    def nodes(self):
         for node in self._nodes:
             yield node
 
@@ -21,5 +22,3 @@ class Way(OSMBaseType):
             attr_str.append('(tags={})'.format(self._tags))
         attr_str = ', '.join(attr_str)
         return 'Way<{}>;'.format(attr_str)
-
-    nodes = property(__get_nodes)
