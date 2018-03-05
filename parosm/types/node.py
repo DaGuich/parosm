@@ -7,6 +7,22 @@ class Node(OSMBaseType):
         self._lat = lat
         self._lon = lon
 
+    @property
+    def lat(self):
+        return self._lat
+
+    @lat.setter
+    def lat(self, val):
+        self._lat = float(val)
+
+    @property
+    def lon(self):
+        return self._lon
+
+    @lon.setter
+    def lon(self, val):
+        self._lon = float(val)
+
     def __str__(self):
         attr_str = list()
         attr_str.append('(id={})'.format(self._id))
