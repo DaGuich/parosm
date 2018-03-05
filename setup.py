@@ -22,7 +22,8 @@ setup(
     packages=find_packages(exclude=['tests']),
     entry_points={
         'console_scripts': [
-            'osm2sql = parosm.prog.osm2sql.__init__:main'
+            'osm2sql = parosm.prog.osm2sql.__init__:main',
+            'osminfo = parosm.prog.osminfo.__init__:main'
         ]
     },
     test_suite='tests',
