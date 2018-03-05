@@ -7,14 +7,14 @@ jobs:
     steps:
       - checkout
       - run:
-        name: install dependencies
-        command: |
-          python3 -m venv venv
-          . venv/bin/activate
-          pip install -r requirements.txt
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
       - run:
-        name: build
-        command: python3 setup.py
+          name: build
+          command: python3 setup.py
       - run:
-        name: test
-        command: python3 -m unittest discover tests/ "*_test.py"
+          name: test
+          command: python3 -m unittest discover tests/ "*_test.py"
