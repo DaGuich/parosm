@@ -1,16 +1,4 @@
 from setuptools import setup, find_packages
-from setuptools.command.install import install
-from subprocess import check_call as call
-import shlex
-import os
-
-
-class BuildPBFClasses(install):
-    def run(self):
-        call(' '.join(shlex.split(
-            'protoc -I proto/ --python_out=./parosm/parse/ proto/fileformat.proto proto/osmformat.proto'
-        )), shell=True)
-        install.run(self)
 
 
 if __name__ == '__main__':
@@ -41,7 +29,4 @@ if __name__ == '__main__':
         },
         test_suite='tests',
         python_requires='>=3.0.0',
-        cmdclass={
-            'install': BuildPBFClasses,
-        }
     )
