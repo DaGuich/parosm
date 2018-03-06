@@ -21,6 +21,9 @@ if __name__ == '__main__':
             'Programming Language :: Python :: 3'
         ],
         packages=find_packages(exclude=['tests']),
+        install_requires=[
+            'protobuf'
+        ],
         entry_points={
             'console_scripts': [
                 'osm2sql = parosm.prog.osm2sql.__init__:main',
