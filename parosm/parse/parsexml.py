@@ -1,14 +1,43 @@
 import os.path
-from xml.etree.ElementTree import XMLPullParser
+from queue import Queue
+import xml.sax
+from xml.sax.handler import ContentHandler
 
 from parosm.types import OSM, Node, Way, Relation
+
+
+class Element:
+    def __init__(self, tag, attrib=None):
+        self.tag = tag
+        self.attrib = dict() if attrib is None else attrib
+
+
+class OSMContentHandler(ContentHandler):
+    def __init__(self):
+        super().__init__()
+        self._event_queue = Queue()
+
+    def read_events(self):
+        while not self._event_queue.empty():
+            yield self._event_queue.get()
+
+    def startElement(self, name, attrs):
+        attrib = {key: attrs.get(key) for key in attrs.getNames()}
+        self._event_queue.put(('start', Element(name, attrib)))
+
+    def endElement(self, name):
+        self._event_queue.put(('end', Element(name)))
 
 
 class XMLParser:
     def __init__(self, file, callback=None):
         self.__file = file
-        self.__parser = XMLPullParser(['start', 'end'])
-        self.__callback = self.__print if callback is None else callback
+        self.__callback = self.__default_callback \
+                if callback is None else callback
+        self.__parser = xml.sax.make_parser()
+        self.__handler= OSMContentHandler()
+
+        self.__parser.setContentHandler(self.__handler)
 
         self.__in_node = False
         self.__in_way = False
@@ -23,7 +52,7 @@ class XMLParser:
             raise Exception('is not a file')
 
     @staticmethod
-    def __print(element):
+    def __default_callback(element):
         print(str(element))
 
     def parse(self):
@@ -37,7 +66,7 @@ class XMLParser:
 
     def __parse_internal(self, line):
         self.__parser.feed(line)
-        for event, element in self.__parser.read_events():
+        for event, element in self.__handler.read_events():
             if element.tag == 'osm' and event == 'start':
                 self.__in_osm = True
                 self.__osm_object = OSM(element.attrib['version'])
@@ -50,7 +79,7 @@ class XMLParser:
                 self.__current_object.add_tag(key, value)
             elif element.tag == 'bounds' and event == 'start':
                 self.__osm_object.set_bounds(**element.attrib)
-            elif element.tag == 'bounds' and event == 'stop':
+            elif element.tag == 'bounds' and event == 'end':
                 pass
             elif element.tag == 'node' and event == 'start':
                 attrs = element.attrib
@@ -83,4 +112,6 @@ class XMLParser:
                 self.__current_object.add_member(attrs['ref'],
                                                  attrs['type'],
                                                  attrs['role'])
+            elif element.tag == 'member' and event == 'end':
+                pass
 
