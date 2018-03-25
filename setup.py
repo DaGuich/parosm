@@ -22,7 +22,8 @@ if __name__ == '__main__':
         ],
         packages=find_packages(exclude=['tests']),
         install_requires=[
-            'protobuf'
+            'protobuf',
+            'defusedxml==0.5.0'
         ],
         entry_points={
             'console_scripts': [

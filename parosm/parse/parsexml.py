@@ -1,6 +1,6 @@
 import os.path
 from queue import Queue
-import xml.sax
+from defusedxml import sax as defusedxml_sax
 from xml.sax.handler import ContentHandler
 
 from parosm.types import OSM, Node, Way, Relation
@@ -34,8 +34,8 @@ class XMLParser:
         self.__file = file
         self.__callback = self.__default_callback \
                 if callback is None else callback
-        self.__parser = xml.sax.make_parser()
-        self.__handler= OSMContentHandler()
+        self.__parser = defusedxml_sax.make_parser()
+        self.__handler = OSMContentHandler()
 
         self.__parser.setContentHandler(self.__handler)
 
