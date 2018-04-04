@@ -16,6 +16,7 @@ class OSMBaseType:
         self._version = 0 if version is None else version
         self._changeset = 0 if changeset is None else changeset
         self._tags = dict() if tags is None else tags
+        self._tags = dict(self._tags, **kwargs)
 
     def add_tag(self, key, value):
         self._tags[key] = value
