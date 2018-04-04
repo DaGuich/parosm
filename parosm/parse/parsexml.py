@@ -35,7 +35,7 @@ class XMLParser:
         self.__callback = self.__default_callback \
                 if callback is None else callback
         self.__parser = xml.sax.make_parser()
-        self.__handler= OSMContentHandler()
+        self.__handler = OSMContentHandler()
 
         self.__parser.setContentHandler(self.__handler)
 
