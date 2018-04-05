@@ -94,7 +94,6 @@ class XMLParser:
         """
         Default callback when no callback is given in init method
         :param element: osm object
-        :return:
         """
         print(str(element))
 
