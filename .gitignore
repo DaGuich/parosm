@@ -65,3 +65,7 @@ venv.bak/
 *.iml
 out
 gen
+
+# Testfiles
+*.osm
+*.osm.pbf
