@@ -18,6 +18,13 @@ def parse_args():
     parser.add_argument('input',
                         type=str,
                         help='OSM file to read')
+    type_group = parser.add_mutually_exclusive_group()
+    type_group.add_argument('--pbf',
+                            action='store_true',
+                            help='Input file is pbf')
+    type_group.add_argument('--xml',
+                            action='store_true',
+                            help='Input file is xml (default)')
     return parser.parse_args()
 
 
@@ -41,7 +48,10 @@ def main():
     args = parse_args()
     if not os.path.isfile(args.input):
         raise Exception('File does not exist: {}'.format(args.input))
-    parser = XMLParser(args.input, counter)
+    if args.pbf:
+        parser = PBFParser(args.input, counter)
+    else:
+        parser = XMLParser(args.input, counter)
     parser.parse()
     print('Bounds: N={}, E={}, S={}, W={}'.format(
         osm_obj.bounds['maxlon'],
