@@ -8,7 +8,21 @@ from parosm.types import *
 
 
 class PBFParser:
+    """
+    PBFParser parses the osm-pbf format
+    """
     def __init__(self, file, callback=None):
+        """
+        Initialize PBFParser
+
+        The callback-method is called when a osm object is found
+
+        def callback(element):
+            pass
+
+        :param file: Path to file
+        :param callback: Callback for read osm objects
+        """
         self.__file = file
         self.__callback = self.__default_callback \
             if callback is None else callback
@@ -18,14 +32,27 @@ class PBFParser:
 
     @staticmethod
     def __default_callback(element):
+        """
+        Default callback when no callback is given in init method
+        :param element: osm object
+        """
         print(str(element))
 
     def parse(self):
+        """
+        Starts the parser
+        """
         with open(self.__file, 'rb') as f:
             while self.__parse_blob(f):
                 pass
 
     def __parse_blob(self, file):
+        """
+        Internal parsing function
+        parses a full blob
+        :param file: open file object
+        :return: False when EOF, True if not
+        """
         blob_header_length_raw = file.read(4)
         if len(blob_header_length_raw) == 0:
             return False
@@ -114,6 +141,15 @@ class PBFParser:
 
     @staticmethod
     def __parse_dense_nodes(dense):
+        """
+        Parse dense node
+
+        yields a tuple of the node ID, latitude, longitude and a
+        tuple with key value attribute values
+
+        :param dense: the dense node object
+        :return: Tuple[ID, Latitude, Longitude, Tuple[Key, Value]]
+        """
         last_id = None
         last_lat = None
         last_lon = None

@@ -1,4 +1,22 @@
+"""
+Includes the basic OpenStreetMap types
+"""
+
+
 class OSMBaseType:
+    """
+    OSM Base type bundles attributes that are shared
+    by all OSM types
+
+    :param identifier: object id
+    :param user: user name
+    :param uid: user id
+    :param timestamp: timestamp of last change
+    :param visible: object visible?
+    :param version: version of the object
+    :param changeset: changeset id
+    :param tags: dictionary with osm object tags
+    """
     def __init__(self,
                  identifier,
                  user=None,
@@ -18,6 +36,11 @@ class OSMBaseType:
         self._tags = dict() if tags is None else tags
 
     def add_tag(self, key, value):
+        """
+        add tag to object
+        :param key: key name
+        :param value:
+        """
         self._tags[key] = value
 
     @property
@@ -96,7 +119,15 @@ class OSMBaseType:
 
 
 class OSM:
-    def __init__(self, version):
+    """
+    Basic OSM Element including the bounding box
+    """
+    def __init__(self, version, bbox=None):
+        """
+        Initialize bounding box
+        :param version: Version of open street map
+        :param bbox: dict[minlat, minlon, maxlat, maxlon]
+        """
         self._version = version
         self._bounds = {
             'minlat': None,
@@ -104,12 +135,21 @@ class OSM:
             'maxlat': None,
             'maxlon': None
         }
+        if bbox is not None:
+            self.set_bounds(**bbox)
 
     def set_bounds(self,
                    minlat=None,
                    minlon=None,
                    maxlat=None,
                    maxlon=None):
+        """
+        Set bounding box
+        :param minlat: Y-min
+        :param minlon: X-min
+        :param maxlat: Y-max
+        :param maxlon: X-max
+        """
         self._bounds['minlat'] = minlat
         self._bounds['minlon'] = minlon
         self._bounds['maxlat'] = maxlat
