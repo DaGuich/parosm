@@ -3,6 +3,18 @@ from parosm.types.osmtype import OSMBaseType
 
 class Relation(OSMBaseType):
     def __init__(self, identifier, members=None, **kwargs):
+        """
+
+        :param identifier: Object ID
+        :param members: Dict[id: Tuple[MemberType, Role]]
+        :param user: user name
+        :param uid: user id
+        :param timestamp: timestamp of last change
+        :param visible: object visible?
+        :param version: version of the object
+        :param changeset: changeset id
+        :param tags: dictionary with osm object tags
+        """
         super().__init__(identifier, **kwargs)
         self._members = dict() if members is None else members
 

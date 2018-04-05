@@ -3,10 +3,26 @@ from parosm.types.osmtype import OSMBaseType
 
 class Way(OSMBaseType):
     def __init__(self, identifier, nodes=None, **kwargs):
+        """
+
+        :param identifier: Object ID
+        :param nodes: IDs of included nodes
+        :param user: user name
+        :param uid: user id
+        :param timestamp: timestamp of last change
+        :param visible: object visible?
+        :param version: version of the object
+        :param changeset: changeset id
+        :param tags: dictionary with osm object tags
+        """
         super().__init__(identifier, **kwargs)
         self._nodes = list() if nodes is None else nodes
 
     def add_node(self, identifier):
+        """
+        Append node to way
+        :param identifier: node id
+        """
         self._nodes.append(identifier)
 
     @property

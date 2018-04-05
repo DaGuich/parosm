@@ -4,7 +4,23 @@ from parosm.types.osmtype import OSMBaseType
 
 
 class Node(OSMBaseType):
+    """
+    OpenStreetMap Node Type
+    """
     def __init__(self, identifier, lat, lon, **kwargs):
+        """
+
+        :param identifier: ID of object
+        :param lat: latitude
+        :param lon: longitude
+        :param user: user name
+        :param uid: user id
+        :param timestamp: timestamp of last change
+        :param visible: object visible?
+        :param version: version of the object
+        :param changeset: changeset id
+        :param tags: dictionary with osm object tags
+        """
         super().__init__(identifier=identifier, **kwargs)
         self._lat = lat
         self._lon = lon

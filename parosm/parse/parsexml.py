@@ -7,33 +7,71 @@ from parosm.types import OSM, Node, Way, Relation
 
 
 class Element:
+    """
+    XML element
+    not an osm object!!!
+    """
     def __init__(self, tag, attrib=None):
         self.tag = tag
         self.attrib = dict() if attrib is None else attrib
 
 
 class OSMContentHandler(ContentHandler):
+    """
+    Content Handler for XML data
+    """
     def __init__(self):
+        """
+        Initialize content handler
+        """
         super().__init__()
         self._event_queue = Queue()
 
     def read_events(self):
+        """
+        Read the read xml events
+        :return: xml parser event
+        """
         while not self._event_queue.empty():
             yield self._event_queue.get()
 
     def startElement(self, name, attrs):
+        """
+        Callback when an element starts
+        Signals the start of an element in non-namespace mode.
+        :param name: raw xml name
+        :param attrs: Attributes interface object
+        """
         attrib = {key: attrs.get(key) for key in attrs.getNames()}
         self._event_queue.put(('start', Element(name, attrib)))
 
     def endElement(self, name):
+        """
+        Signals the end of an element in non-namespace mode.
+        :param name: raw xml name
+        """
         self._event_queue.put(('end', Element(name)))
 
 
 class XMLParser:
+    """
+    XMLParser parses the the osm-xml format
+    """
     def __init__(self, file, callback=None):
+        """
+        Initialize XMLParser
+
+        The callback-method is called when a osm object is found
+
+        def callback(element):
+            pass
+
+        :param file: Path to file
+        :param callback: Callback for read osm objects
+        """
         self.__file = file
         self.__callback = self.__default_callback \
-                if callback is None else callback
+            if callback is None else callback
         self.__parser = defusedxml_sax.make_parser()
         self.__handler = OSMContentHandler()
 
@@ -53,9 +91,16 @@ class XMLParser:
 
     @staticmethod
     def __default_callback(element):
+        """
+        Default callback when no callback is given in init method
+        :param element: osm object
+        """
         print(str(element))
 
     def parse(self):
+        """
+        Starts the parser
+        """
         with open(self.__file, 'r') as f:
             for ln, line in enumerate(f):
                 try:
@@ -65,6 +110,10 @@ class XMLParser:
                     raise e
 
     def __parse_internal(self, line):
+        """
+        Internal osm object orchestration from the file
+        :param line: current
+        """
         self.__parser.feed(line)
         for event, element in self.__handler.read_events():
             if element.tag == 'osm' and event == 'start':

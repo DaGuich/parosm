@@ -1,3 +1,6 @@
+"""
+OpenStreetMap Types
+"""
 from parosm.types.node import Node
 from parosm.types.way import Way
 from parosm.types.relation import Relation
