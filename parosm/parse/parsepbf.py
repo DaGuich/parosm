@@ -64,7 +64,7 @@ class PBFParser:
             odata.ParseFromString(data)
             strings = [s.decode('utf-8') for s in odata.stringtable.s]
             for pg in odata.primitivegroup:
-                for i, (ID, lat, lon, kv) in enumerate(self.__parse_dense_nodes(pg.dense)):
+                for ID, lat, lon, kv in self.__parse_dense_nodes(pg.dense):
                     lat += odata.lat_offset
                     lon += odata.lon_offset
                     lat *= odata.granularity * (10**-9)
