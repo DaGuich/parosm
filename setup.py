@@ -7,7 +7,7 @@ if __name__ == '__main__':
 
     setup(
         name='parosm',
-        version='0.1',
+        version='0.2b1',
         description='OpenStreetMap Parser',
         long_description=long_description,
         url='https://github.com/DaGuich/parosm.git',
@@ -23,7 +23,8 @@ if __name__ == '__main__':
         packages=find_packages(exclude=['tests']),
         install_requires=[
             'protobuf',
-            'defusedxml==0.5.0'
+            'defusedxml==0.5.0',
+            'python-magic==0.4.15'
         ],
         entry_points={
             'console_scripts': [
