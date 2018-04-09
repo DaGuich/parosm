@@ -2,12 +2,13 @@ import os.path
 import zlib
 import lzma
 
+from parosm.parse.parsebase import BaseParser
 from parosm.parse import fileformat_pb2 as pbf_fformat
 from parosm.parse import osmformat_pb2 as pbf_oformat
 from parosm.types import *
 
 
-class PBFParser:
+class PBFParser(BaseParser):
     """
     PBFParser parses the osm-pbf format
     """
@@ -23,6 +24,7 @@ class PBFParser:
         :param file: Path to file
         :param callback: Callback for read osm objects
         """
+        super().__init__(file, callback)
         self.__file = file
         self.__callback = self.__default_callback \
             if callback is None else callback

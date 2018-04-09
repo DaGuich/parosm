@@ -3,6 +3,7 @@ from queue import Queue
 from defusedxml import sax as defusedxml_sax
 from xml.sax.handler import ContentHandler
 
+from parosm.parse.parsebase import BaseParser
 from parosm.types import OSM, Node, Way, Relation
 
 
@@ -53,7 +54,7 @@ class OSMContentHandler(ContentHandler):
         self._event_queue.put(('end', Element(name)))
 
 
-class XMLParser:
+class XMLParser(BaseParser):
     """
     XMLParser parses the the osm-xml format
     """
@@ -69,6 +70,7 @@ class XMLParser:
         :param file: Path to file
         :param callback: Callback for read osm objects
         """
+        super().__init__(file, callback)
         self.__file = file
         self.__callback = self.__default_callback \
             if callback is None else callback
