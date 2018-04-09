@@ -13,7 +13,7 @@ Added:
 
 Changed:
 
--
+- Use MultiParser in osminfo
 
 Deprecated:
 
@@ -21,7 +21,7 @@ Deprecated:
 
 Removed:
 
--
+- --xml and --pbf arguments of osminfo
 
 Fixed:
 

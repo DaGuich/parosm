@@ -1,7 +1,9 @@
 import argparse
 import os
 
-from parosm.parse import *
+import magic
+
+from parosm.parse import MultiParser
 from parosm.types import *
 
 
@@ -18,13 +20,13 @@ def parse_args():
     parser.add_argument('input',
                         type=str,
                         help='OSM file to read')
-    type_group = parser.add_mutually_exclusive_group()
-    type_group.add_argument('--pbf',
-                            action='store_true',
-                            help='Input file is pbf')
-    type_group.add_argument('--xml',
-                            action='store_true',
-                            help='Input file is xml (default)')
+    # type_group = parser.add_mutually_exclusive_group()
+    # type_group.add_argument('-p', '--pbf',
+    #                         action='store_true',
+    #                         help='Input file is pbf')
+    # type_group.add_argument('-x', '--xml',
+    #                         action='store_true',
+    #                         help='Input file is xml (default)')
     return parser.parse_args()
 
 
@@ -46,12 +48,7 @@ def counter(obj):
 
 def main():
     args = parse_args()
-    if not os.path.isfile(args.input):
-        raise Exception('File does not exist: {}'.format(args.input))
-    if args.pbf:
-        parser = PBFParser(args.input, counter)
-    else:
-        parser = XMLParser(args.input, counter)
+    parser = MultiParser(args.input, counter)
     parser.parse()
     print('Bounds: N={}, E={}, S={}, W={}'.format(
         osm_obj.bounds['maxlon'],
