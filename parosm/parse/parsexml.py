@@ -72,6 +72,9 @@ class XMLParser(BaseParser):
         """
         super().__init__(file, callback)
         self.__file = file
+        if not os.path.isfile(file):
+            raise Exception('is not a file')
+
         self.__callback = self.__default_callback \
             if callback is None else callback
         self.__parser = defusedxml_sax.make_parser()
@@ -87,9 +90,6 @@ class XMLParser(BaseParser):
 
         self.__osm_object = None
         self.__current_object = None
-
-        if not os.path.isfile(file):
-            raise Exception('is not a file')
 
     @staticmethod
     def __default_callback(element):

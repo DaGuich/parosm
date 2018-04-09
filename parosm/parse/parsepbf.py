@@ -26,11 +26,11 @@ class PBFParser(BaseParser):
         """
         super().__init__(file, callback)
         self.__file = file
-        self.__callback = self.__default_callback \
-            if callback is None else callback
-
         if not os.path.isfile(file):
             raise Exception('is not a file')
+
+        self.__callback = self.__default_callback \
+            if callback is None else callback
 
     @staticmethod
     def __default_callback(element):
