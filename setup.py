@@ -1,9 +1,20 @@
+import unittest
 from setuptools import setup, find_packages
+
+
+def spin_up_test_suite():
+    test_loader = unittest.TestLoader()
+    test_suite = test_loader.discover('tests')
+    return test_suite
 
 
 if __name__ == '__main__':
     with open('README.rst', 'r') as f:
         long_description = f.read()
+
+    result = unittest.TestResult()
+    spin_up_test_suite().run(result)
+    print(result)
 
     setup(
         name='parosm',
@@ -32,6 +43,6 @@ if __name__ == '__main__':
                 'osminfo = parosm.prog.osminfo.__init__:main'
             ]
         },
-        test_suite='tests',
+        test_suite='setup.spin_up_test_suite',
         python_requires='>=3.0.0',
     )
