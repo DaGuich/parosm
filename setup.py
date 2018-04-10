@@ -12,10 +12,6 @@ if __name__ == '__main__':
     with open('README.rst', 'r') as f:
         long_description = f.read()
 
-    result = unittest.TestResult()
-    spin_up_test_suite().run(result)
-    print(result)
-
     setup(
         name='parosm',
         version='0.2b1',
