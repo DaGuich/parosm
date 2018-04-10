@@ -33,3 +33,5 @@ jobs:
           post: |
             mkdir $CIRCLE_ARTIFACTS/test
             mv coverage.* $CIRCLE_ARTIFACTS/test/.
+          artifacts:
+            - "coverage.html"
