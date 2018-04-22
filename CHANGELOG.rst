@@ -9,12 +9,41 @@ and this project adheres to `Semantic Versioning <http://semver.org/spec/v2.0.0.
 ------------
 Added:
 
+-
+
+Changed:
+
+-
+
+Deprecated:
+
+-
+
+Removed:
+
+-
+
+Fixed:
+
+-
+
+Security:
+
+-
+
+
+[0.2] - 2018-04-22
+------------
+Added:
+
 - MultiParser as parser for all of the two file types
 - Make importing of all "public" classes easier
+- Testing
 
 Changed:
 
 - Use MultiParser in osminfo
+- Coordinate assignment does not throw TypeError but ValueError
 
 Deprecated:
 
