@@ -14,7 +14,7 @@ if __name__ == '__main__':
 
     setup(
         name='parosm',
-        version='0.2',
+        version='0.3-pre',
         description='OpenStreetMap Parser',
         long_description=long_description,
         url='https://github.com/DaGuich/parosm.git',
