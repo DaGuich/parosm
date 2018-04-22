@@ -73,3 +73,24 @@ class TestWay(unittest.TestCase):
         w.add_node(2)
         stored_nodes = len(list(w.nodes))
         self.assertEqual(2, stored_nodes)
+
+    def test_get_node(self):
+        orig_nodes = [0, 1, 2]
+        added_nodes = [3, 4, 5]
+        all_nodes = orig_nodes + added_nodes
+
+        w = Way(200, orig_nodes)
+        self.assertEqual(list(w.nodes), orig_nodes)
+
+        for n in added_nodes:
+            w.add_node(n)
+        self.assertEqual(list(w.nodes), all_nodes)
+
+    def test_2str(self):
+        w = Way(500)
+        self.assertEqual(str(w), 'Way<(id=500), (nodes=0)>;')
+
+        w.add_node(0)
+        w.add_node(1)
+        w.add_node(2)
+        self.assertEqual(str(w), 'Way<(id=500), (nodes=3)>;')
