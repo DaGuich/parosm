@@ -50,3 +50,26 @@ class TestNode(unittest.TestCase):
     def test_2str(self):
         n = Node(0, 1.0, 1.0)
         self.assertEqual(str(n), 'Node<(id=0), (lat=1.0, lon=1.0)>;')
+
+
+class TestWay(unittest.TestCase):
+    def test_identifier(self):
+        w = Way(5)
+        self.assertEqual(5, w.id)
+
+        w = Way(10)
+        self.assertEqual(10, w.id)
+
+    def test_add_node(self):
+        w = Way(200)
+
+        stored_nodes = len(w.nodes)
+        self.assertEqual(0, stored_nodes)
+
+        w.add_node(1)
+        stored_nodes = len(w.nodes)
+        self.assertEqual(1, stored_nodes)
+
+        w.add_node(2)
+        stored_nodes = len(w.nodes)
+        self.assertEqual(2, stored_nodes)
