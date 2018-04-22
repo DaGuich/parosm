@@ -17,11 +17,21 @@ jobs:
           name: build
           command: |
             . venv/bin/activate
+            python3 setup.py sdist bdist_wheel
             python3 setup.py install
+          post: |
+            mkdir $CIRCLE_ARTIFACTS/dist
+            mv dist/* $CIRCLE_ARTIFACTS/dist/.
       - run:
           name: test
           command: |
             . venv/bin/activate
             coverage run setup.py test
             coverage xml
+            coverage html
             python-codacy-coverage -r coverage.xml
+          post: |
+            mkdir $CIRCLE_ARTIFACTS/test
+            mv coverage.* $CIRCLE_ARTIFACTS/test/.
+          artifacts:
+            - "coverage.html"

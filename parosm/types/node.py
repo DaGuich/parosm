@@ -24,6 +24,8 @@ class Node(OSMBaseType):
         super().__init__(identifier=identifier, **kwargs)
         self._lat = lat
         self._lon = lon
+        self.lat = lat
+        self.lon = lon
 
     @property
     def lat(self):
@@ -47,18 +49,20 @@ class Node(OSMBaseType):
 
     @coords.setter
     def coords(self, coords):
-        if not isinstance(coords, collections.Iterable):
+        if not isinstance(coords, (collections.Iterable,
+                                   collections.Sized,
+                                   collections.Mapping)):
             raise TypeError('coords is not iterable')
         if len(coords) != 2:
             raise ValueError('coords does not have length 2')
-        self._lat = float(coords[0])
-        self._lon = float(coords[1])
+        self.lat = coords[0]
+        self.lon = coords[1]
 
     def __str__(self):
         attr_str = list()
         attr_str.append('(id={})'.format(self._id))
-        attr_str.append('(lat={})'.format(self._lat))
-        attr_str.append('(lon={})'.format(self._lon))
+        attr_str.append('(lat={}, lon={})'.format(self._lat,
+                                                  self._lon))
         if len(self._tags) > 0:
             attr_str.append('(tags={})'.format(self._tags))
         attr_str = ', '.join(attr_str)
