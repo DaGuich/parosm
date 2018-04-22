@@ -15,7 +15,7 @@ class TestNode(unittest.TestCase):
         self.assertAlmostEqual(1.0, n.lat)
         n.lat = 2.0
         self.assertAlmostEqual(2.0, n.lat)
-        with self.assertRaises(TypeError):
+        with self.assertRaises(ValueError):
             n.lat = 'a'
             n = Node(0, 'a', 0)
             self.assertEqual(n.lat, 'a')
@@ -25,7 +25,7 @@ class TestNode(unittest.TestCase):
         self.assertAlmostEqual(1.0, n.lon)
         n.lon = 2.0
         self.assertAlmostEqual(2.0, n.lon)
-        with self.assertRaises(TypeError):
+        with self.assertRaises(ValueError):
             n.lon = 'a'
             n = Node(0, 0, 'a')
             self.assertEqual(n.lon, 'a')
@@ -41,10 +41,10 @@ class TestNode(unittest.TestCase):
         n.coords = 3.0, 3.5
         self.assertAlmostEqual(3.0, n.lat)
         self.assertAlmostEqual(3.5, n.lon)
-        with self.assertRaises(TypeError):
+        with self.assertRaises(ValueError):
             n.coords = 'a', 0.0
 
-        with self.assertRaises(TypeError):
+        with self.assertRaises(ValueError):
             n.coords = 'b', 0.0
 
     def test_2str(self):

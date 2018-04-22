@@ -33,8 +33,6 @@ class Node(OSMBaseType):
 
     @lat.setter
     def lat(self, val):
-        if not isinstance(val, (float, int)):
-            raise TypeError('Is not a number')
         self._lat = float(val)
 
     @property
@@ -43,8 +41,6 @@ class Node(OSMBaseType):
 
     @lon.setter
     def lon(self, val):
-        if not isinstance(val, (float, int)):
-            raise TypeError('Is not a number')
         self._lon = float(val)
 
     @property
@@ -53,7 +49,9 @@ class Node(OSMBaseType):
 
     @coords.setter
     def coords(self, coords):
-        if not isinstance(coords, (collections.Iterable, collections.Sized)):
+        if not isinstance(coords, (collections.Iterable,
+                                   collections.Sized,
+                                   collections.Mapping)):
             raise TypeError('coords is not iterable')
         if len(coords) != 2:
             raise ValueError('coords does not have length 2')
