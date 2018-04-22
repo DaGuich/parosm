@@ -63,13 +63,13 @@ class TestWay(unittest.TestCase):
     def test_add_node(self):
         w = Way(200)
 
-        stored_nodes = len(w.nodes)
+        stored_nodes = len(list(w.nodes))
         self.assertEqual(0, stored_nodes)
 
         w.add_node(1)
-        stored_nodes = len(w.nodes)
+        stored_nodes = len(list(w.nodes))
         self.assertEqual(1, stored_nodes)
 
         w.add_node(2)
-        stored_nodes = len(w.nodes)
+        stored_nodes = len(list(w.nodes))
         self.assertEqual(2, stored_nodes)
